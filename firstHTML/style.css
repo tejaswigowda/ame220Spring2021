@@ -1,0 +1,28 @@
+h1 {
+    color:yellow;
+    background:red;
+    height:200px;
+    width:80%;
+}
+body {
+  color: red;
+  background:blue;
+}
+.addrlink{
+  background: black;
+  color: white;
+}
+#name{
+  background: teal;
+}
+a{
+    display:none;
+}
+
+#footer #about{
+  font-size: 200%;
+}
+
+div#footer{
+  background: yellow;
+}
