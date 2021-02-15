@@ -2,6 +2,15 @@
 <html>
 <head>
   <style>
+    .active{
+      background:gold;
+    }
+    #numWrapper{
+      position: fixed;
+      width: 100%;
+      bottom: 5px;
+      text-align:center;
+    }
     .slide{
       position:absolute;
       height: calc(100% - 50px);
@@ -9,6 +18,7 @@
       background-repeat: no-repeat;
       background-position: 50%;
       background-size: contain;
+      display: none;
     }
     button#prev{
       position:fixed;
@@ -47,8 +57,11 @@
     var currentSlide = 1;
 
     function goToSlide(n){
-      $(".slide").hide();
-      $(".slide:nth-of-type("+ n +")").show();
+      currentSlide = n;
+      $(".slide").fadeOut(300);
+      $(".slide:nth-of-type("+ n +")").fadeIn(500);
+      $("#numWrapper button").removeClass("active");
+      $("#numWrapper button:nth-of-type("+ n +")").addClass("active");
     }
   </script>
 </head>
@@ -58,6 +71,15 @@
 <div  class='slide' style='background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Mistletoebird_-_Round_Hill_Nature_Reserve.jpg/900px-Mistletoebird_-_Round_Hill_Nature_Reserve.jpg)'></div>
 <div  class='slide' style='background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Lavender_waxbill_%28Estrilda_caerulescens%29.jpg/600px-Lavender_waxbill_%28Estrilda_caerulescens%29.jpg)'></div>
   <div  class='slide' style='background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Emu_1_-_Tidbinbilla.jpg/750px-Emu_1_-_Tidbinbilla.jpg)'></div>
+
+
+<div id='numWrapper'>
+  <button onclick='goToSlide(1)'>1</button>
+  <button onclick='goToSlide(2)'>2</button>
+  <button onclick='goToSlide(3)'>3</button>
+  <button onclick='goToSlide(4)'>4</button>
+  <button onclick='goToSlide(5)'>5</button>
+</div>
 
 <button onclick='goPrev()' id='prev'>Prev</button>
 <button onclick='goNext()' id='next'>Next</button>
