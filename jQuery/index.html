@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    img{
+      position:absolute;
+    }
+    button#prev{
+      position:fixed;
+      bottom: 5px;
+      left: 5px;
+    }
+    button#next{
+      position:fixed;
+      bottom: 5px;
+      right: 5px;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    function start()
+    {
+      goToSlide(1);
+    }
+    function goPrev()
+    {
+      currentSlide = currentSlide - 1;
+      if(currentSlide == 0){
+        currentSlide = 5;
+      }
+      goToSlide(currentSlide);
+    }
+    function goNext()
+    {
+      currentSlide = currentSlide + 1;
+      if(currentSlide > 5){
+        currentSlide = 1;
+      }
+      goToSlide(currentSlide);
+    }
+
+    var currentSlide = 1;
+
+    function goToSlide(n){
+      $("img").hide();
+      $("img:nth-of-type("+ n +")").show();
+    }
+  </script>
+</head>
+<body onload='start()'>
+<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Male_northern_pintail_at_Llano_Seco.jpg/960px-Male_northern_pintail_at_Llano_Seco.jpg'>
+<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Yellow-throated_Miner_-_Sturt_National_Park.jpg/600px-Yellow-throated_Miner_-_Sturt_National_Park.jpg'>
+<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Mistletoebird_-_Round_Hill_Nature_Reserve.jpg/900px-Mistletoebird_-_Round_Hill_Nature_Reserve.jpg'>
+<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Lavender_waxbill_%28Estrilda_caerulescens%29.jpg/600px-Lavender_waxbill_%28Estrilda_caerulescens%29.jpg'>
+<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Emu_1_-_Tidbinbilla.jpg/750px-Emu_1_-_Tidbinbilla.jpg'>
+
+<button onclick='goPrev()' id='prev'>Prev</button>
+<button onclick='goNext()' id='next'>Next</button>
+</body>
+</html>
