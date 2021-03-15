@@ -7,6 +7,10 @@
   height: 300px;
   border: 2px solid;
   border-radius: 50%;
+  position:fixed;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%, -50%);
 }
 .num{
   height: 20px;
@@ -51,9 +55,53 @@
 #num1{
   transform: translate(150px, 0) rotate(30deg);
 }
+.hand{
+  position: fixed;
+  height: 2px;
+  transform: translate(150px, 150px);
+  transform-origin: 0 0;
+}
+
+#hour{
+ width: 100px; 
+ background: green;
+}
+#min{
+ width: 130px; 
+ background: blue;
+}
+#sec{
+ width: 140px; 
+ background:red;
+}
 </style>
+<script>
+function start(){
+  updateTime();
+  setInterval("updateTime()", 1000);
+}
+
+function updateTime()
+{
+  var time = new Date();
+  var h = time.getHours();
+  if(h > 12){ h = h % 12 }
+  var m = time.getMinutes();
+  var s = time.getSeconds();
+  console.log(h,m,s);
+ 
+  var hAng = (h - 3) * (360/12) + (m * .5);
+  var mAng = (m - 15) * (360/60);
+  var sAng = (s - 15) * (360/60);
+
+  document.getElementById("hour").style.transform = "translate(150px, 150px) rotate(" + hAng+ "deg)";
+  document.getElementById("min").style.transform = "translate(150px, 150px) rotate(" + mAng+ "deg)";
+  document.getElementById("sec").style.transform = "translate(150px, 150px) rotate(" + sAng+ "deg)";
+
+}
+</script>
 </head>
-<body>
+<body onload='start()'>
   <div id='frame'>
     <div id='hour' class='hand'></div>
     <div id='min' class='hand'></div>
