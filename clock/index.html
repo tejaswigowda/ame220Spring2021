@@ -11,6 +11,7 @@
   left: 50%;
   top:50%;
   transform: translate(-50%, -50%);
+  background:white;
 }
 .num{
   height: 20px;
@@ -55,6 +56,20 @@
 #num1{
   transform: translate(150px, 0) rotate(30deg);
 }
+
+.night#frame #hour{
+  background:white;
+}
+.night#frame #min{
+  background:white;
+}
+.night#frame{
+  background:black;
+}
+.night#frame .num{
+  color:white;
+}
+
 .hand{
   position: fixed;
   height: 2px;
@@ -64,11 +79,11 @@
 
 #hour{
  width: 100px; 
- background: green;
+ background: black;
 }
 #min{
  width: 130px; 
- background: blue;
+ background: black;
 }
 #sec{
  width: 140px; 
@@ -76,19 +91,33 @@
 }
 </style>
 <script>
+var offset = 0;
 function start(){
+  var hash = window.location.hash.replace("#","");
+  offset = parseFloat(hash);
   updateTime();
   setInterval("updateTime()", 1000);
 }
 
+var isNight = false;
+
 function updateTime()
 {
-  var time = new Date();
+  var now = new Date();
+  var time = new Date(now.getTime() + (now.getTimezoneOffset() * 60*1000) + (offset *60*60*1000))
+
   var h = time.getHours();
+  if(!(h >=6 && h <18)){
+    isNight = true;
+    document.getElementById("frame").classList = "night";
+  }
+  else{
+    isNight = false;
+    document.getElementById("frame").classList = "";
+  }
   if(h > 12){ h = h % 12 }
   var m = time.getMinutes();
   var s = time.getSeconds();
-  console.log(h,m,s);
  
   var hAng = (h - 3) * (360/12) + (m * .5);
   var mAng = (m - 15) * (360/60);
