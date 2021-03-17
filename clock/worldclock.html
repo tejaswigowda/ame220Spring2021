@@ -31,7 +31,7 @@ function updateClock(){
 
 </script>
 </head>
-<body>
+<body onload='updateClock()'>
   <select name="timezone" id="timezone" onchange='updateClock()'>
     <option value="-12">(UTC-12:00) International Date Line West</option>
     <option value="-11">(UTC-11:00) Coordinated Universal Time-11</option>
