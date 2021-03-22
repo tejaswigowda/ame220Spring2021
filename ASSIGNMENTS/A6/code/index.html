@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+function addAnimation()
+{
+  var animationName = $("#anDropdown option:selected").text();
+
+  console.log(animationName);
+}
+  </script>
+</head>
+<body>
+
+<select id='anDropdown' onchange='addAnimation()'>
+  <option disabled selected>choose an animation</option>
+  <option>bounce</option>
+  <option>flash</option>
+  <option>pulse</option>
+  <option>rubberBand</option>
+  <option>shakeX</option>
+  <option>shakeY</option>
+  <option>headShake</option>
+  <option>swing</option>
+  <option>tada</option>
+  <option>wobble</option>
+  <option>jello</option>
+  <option>heartBeat</option>
+  <option>backInDown</option>
+  <option>backInLeft</option>
+  <option>backInRight</option>
+  <option>backInUp</option>
+  <option>backOutDown</option>
+  <option>backOutLeft</option>
+  <option>backOutRight</option>
+  <option>backOutUp</option>
+  <option>bounceIn</option>
+  <option>bounceInDown</option>
+  <option>bounceInLeft</option>
+  <option>bounceInRight</option>
+  <option>boundInUp</option>
+  <option>bounceOut</option>
+  <option>bounceOutDown</option>
+  <option>bounceOutLeft</option>
+  <option>bounceOutRight</option>
+  <option>boundOutUp</option>
+</select>
+<div id='box' style='width:100%;height: 400px; background:red'>
+
+</div>
+</body>
+</html>
