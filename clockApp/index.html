@@ -11,6 +11,27 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
       <style>
+        iframe.smallClock{
+          border:none;
+          width: 320px;
+          height: 320px;
+          transform: scale(.33);
+          transform-origin: 0px 0px;
+              position: absolute;
+    top: 0;
+    left: 0;
+        }
+        #tzList p{
+          position: absolute;
+          top: 0;
+          right: 10px;
+          width: calc(100% - 120px);
+        }
+        #tzList button{
+          width: 100%;
+          height: 120px;
+              position: relative;
+        }
         #tzList{
           position:fixed;
           top:0;
@@ -33,7 +54,27 @@
       <script>
         function start(){
          $('.modal').modal();
+         $("#timezone").val(JSON.parse(localStorage.getItem("tzs")))
          $('select').formSelect();
+         setTimeout("createClocks()", 1000);
+        }
+
+        function createClocks(){
+          var tzs = $("#timezone").val();
+          console.log(tzs);
+          localStorage.removeItem("tzs");
+          localStorage.setItem("tzs", JSON.stringify(tzs))
+          var tzObjs = $('#timezone option:selected');
+          console.log(tzs, tzObjs)
+          var markup = "";
+          for (var i = 0; i < tzs.length; i++){
+            console.log(i);
+            markup += "<button onclick='tzSelected("+i+")'>"+
+                "<iframe class='smallClock' src='clock.html#" + tzs[i].toString() + "'> </iframe>"+
+                "<p>" + tzObjs[i].innerHTML + "</p>"+
+              "</button>"
+          }
+          document.getElementById("tzList").innerHTML = markup;
         }
       </script>
     </head>
@@ -54,8 +95,8 @@
     <div class="modal-content" style='min-height: 60vh;
     overflow: scroll;'>
       <h4>Choose Timezones</h4>
-  <select multiple name="timezone" id="timezone" onchange='updateClock()'>
-    <option disabled selected> Select multiple timezones </option>
+  <select multiple name="timezone" id="timezone" onchange=''>
+    <option disabled > Select multiple timezones </option>
     <option value="-12">(UTC-12:00) International Date Line West</option>
     <option value="-11">(UTC-11:00) Coordinated Universal Time-11</option>
     <option value="-10">(UTC-10:00) Hawaii</option>
@@ -165,7 +206,7 @@
 </select>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Done</a>
+      <a href="javascript:createClocks()" class="modal-close waves-effect waves-green btn-flat">Done</a>
     </div>
   </div>
 
