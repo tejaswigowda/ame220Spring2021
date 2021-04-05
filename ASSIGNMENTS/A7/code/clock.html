@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+<style>
+#frame{
+  width: 300px;
+  height: 300px;
+  border: 2px solid;
+  border-radius: 50%;
+  position:fixed;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  background:white;
+}
+.num{
+  height: 20px;
+  width: 1px;
+  border: 1px solid;
+  position: absolute;
+  transform-origin: 0px 150px;
+}
+#num12{
+  transform: translate(150px, 0);
+}
+#num11{
+  transform: translate(150px, 0) rotate(330deg);
+}
+#num10{
+  transform: translate(150px, 0) rotate(300deg);
+}
+#num9{
+  transform: translate(150px, 0) rotate(270deg);
+}
+#num8{
+  transform: translate(150px, 0) rotate(240deg);
+}
+#num7{
+  transform: translate(150px, 0) rotate(210deg);
+}
+#num6{
+  transform: translate(150px, 0) rotate(180deg);
+}
+#num5{
+  transform: translate(150px, 0) rotate(150deg);
+}
+#num4{
+  transform: translate(150px, 0) rotate(120deg);
+}
+#num3{
+  transform: translate(150px, 0) rotate(90deg);
+}
+#num2{
+  transform: translate(150px, 0) rotate(60deg);
+}
+#num1{
+  transform: translate(150px, 0) rotate(30deg);
+}
+
+.night#frame #hour{
+  background:white;
+}
+.night#frame #min{
+  background:white;
+}
+.night#frame{
+  background:black;
+}
+.night#frame .num{
+  color:white;
+}
+
+.hand{
+  position: fixed;
+  height: 2px;
+  transform: translate(150px, 150px);
+  transform-origin: 0 0;
+}
+
+#hour{
+ width: 100px; 
+ background: black;
+}
+#min{
+ width: 130px; 
+ background: black;
+}
+#sec{
+ width: 140px; 
+ background:red;
+}
+</style>
+<script>
+var offset = 0;
+function start(){
+  var hash = window.location.hash.replace("#","");
+  offset = parseFloat(hash);
+  updateTime();
+  setInterval("updateTime()", 1000);
+}
+
+var isNight = false;
+
+function updateTime()
+{
+  var now = new Date();
+  var time = new Date(now.getTime() + (now.getTimezoneOffset() * 60*1000) + (offset *60*60*1000))
+
+  var h = time.getHours();
+  if(!(h >=6 && h <18)){
+    isNight = true;
+    document.getElementById("frame").classList = "night";
+  }
+  else{
+    isNight = false;
+    document.getElementById("frame").classList = "";
+  }
+  if(h > 12){ h = h % 12 }
+  var m = time.getMinutes();
+  var s = time.getSeconds();
+ 
+  var hAng = (h - 3) * (360/12) + (m * .5);
+  var mAng = (m - 15) * (360/60);
+  var sAng = (s - 15) * (360/60);
+
+  document.getElementById("hour").style.transform = "translate(150px, 150px) rotate(" + hAng+ "deg)";
+  document.getElementById("min").style.transform = "translate(150px, 150px) rotate(" + mAng+ "deg)";
+  document.getElementById("sec").style.transform = "translate(150px, 150px) rotate(" + sAng+ "deg)";
+
+}
+</script>
+</head>
+<body onload='start()'>
+  <div id='frame'>
+    <div id='hour' class='hand'></div>
+    <div id='min' class='hand'></div>
+    <div id='sec' class='hand'></div>
+    <div id='num12' class='num'></div>
+    <div id='num11' class='num'></div>
+    <div id='num10' class='num'></div>
+    <div id='num9' class='num'></div>
+    <div id='num8' class='num'></div>
+    <div id='num7' class='num'></div>
+    <div id='num6' class='num'></div>
+    <div id='num5' class='num'></div>
+    <div id='num4' class='num'></div>
+    <div id='num3' class='num'></div>
+    <div id='num2' class='num'></div>
+    <div id='num1' class='num'></div>
+  </div>
+</body>
+</html>
