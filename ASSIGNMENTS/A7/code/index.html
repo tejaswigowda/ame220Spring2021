@@ -52,6 +52,14 @@
         }
       </style>
       <script>
+        function tzSelected(n){
+          var tzs = $("#timezone").val();
+          var tzObjs = $('#timezone option:selected');
+
+          // document.getElementById("details").src = ......
+        
+        }
+
         function start(){
          $('.modal').modal();
          $("#timezone").val(JSON.parse(localStorage.getItem("tzs")))
