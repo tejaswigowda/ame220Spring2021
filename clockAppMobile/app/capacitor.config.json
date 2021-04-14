@@ -1,0 +1,12 @@
+{
+  "appId": "app.clock",
+  "appName": "clockApp",
+  "bundledWebRuntime": true,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}
