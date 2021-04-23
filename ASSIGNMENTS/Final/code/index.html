@@ -1,0 +1,236 @@
+<html>
+<head>
+<title>
+   Word Cloud
+</title>
+
+<meta name='viewport' content-width="device-width" user-scalable='no' initial-scale='1' maximum-scale='1'>
+
+<style>
+.touch #cloud span:active, .mouse #cloud span:hover{
+  background-color: black;
+  color: white;
+}
+
+#cloud span{
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  -moz-transition-duration: .2s;
+  -o-transition-duration: .2s;
+  -ms-transition-duration: .2s;
+  -webkit-transition-duration: .2s;
+  transition-duration: .2s;
+}
+
+#cloud{
+	height: auto;
+	min-height: 300px;
+	display: block;
+  border: 1px dashed gray;
+  border-radius: 10px;
+  margin:auto;
+  margin-top: 20px;
+  width: 80%;
+  padding:15px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+h1{
+  width: 100%;
+  text-align: center;
+}
+</style>
+
+<script src="./jquery-2.1.3.js"></script>
+
+<script>
+
+var ENV = {
+	device: {
+		iOS: null,
+		iPhone: null,
+		iPad: null,
+		android: null,
+		mouse: null,
+		touch: null
+	},
+	screen:{
+		height:null,
+		width:null,
+		big: null,
+		small: null
+	},
+	initialize: function(){
+		var ua = window.navigator.userAgent.toLowerCase();
+		if(ua.indexOf('iphone') >=0 || ua.indexOf('ipad') >=0 ){
+			ENV.device.iOS = true;
+			if(ua.indexOf('iphone') >=0){
+				ENV.device.iPhone = true;
+				ENV.device.iPad = false;
+			}
+			else{
+				ENV.device.iPhone = false;
+				ENV.device.iPad = true;				
+			}
+
+		} 
+		else{
+			ENV.device.iOS = false;	
+			ENV.device.iPhone = false;
+			ENV.device.iPad = false;		
+		}
+		
+		
+		if(ua.indexOf('android') >=0){
+			ENV.device.android = true;			
+		}
+		else{
+			ENV.device.android = false;			
+		}
+		
+		if(ENV.device.iOS || ENV.device.android){
+			ENV.device.touch = true;
+			ENV.device.mouse = false;
+		}
+		else{
+			ENV.device.touch = false;
+			ENV.device.mouse = true;
+		}
+		
+		if(!ENV.device.android){
+			ENV.screen.height = $(window).height();
+			ENV.screen.width = $(window).width();
+		}
+		else{
+			ENV.screen.height = window.innerHeight;
+			ENV.screen.width = window.innerWidth;
+		}
+		
+		if(ENV.screen.width > 1024){
+			ENV.screen.big = true;
+			ENV.screen.small = false;
+		}
+		else{
+			ENV.screen.big = false;
+			ENV.screen.small = true;
+		}
+		
+		var docClassName = "";
+		if(ENV.screen.big){
+			docClassName = docClassName + " big";
+		}
+		else{
+			docClassName = docClassName + " small";
+		}
+		if(ENV.device.touch){
+			docClassName = docClassName + " touch";
+		}
+		else{
+			docClassName = docClassName + " mouse";
+		}
+		
+		/*
+			var x = document.getElementsByTagName("html");
+			var htmltagobj = x[0]
+			htmltagobj.className = docClassName;
+		*/
+		document.getElementsByTagName("html")[0].className = docClassName;
+	}
+}
+
+function getXMLHTTPRequest()
+{
+    var request;
+    // Lets try using ActiveX to instantiate the XMLHttpRequest object
+    try{
+        request = new ActiveXObject("Microsoft.XMLHTTP");
+    }catch(ex1){
+    try{
+        request = new ActiveXObject("Msxml2.XMLHTTP");
+    }catch(ex2){
+        request = null;
+    }
+                                            }
+
+    // If the previous didn't work, lets check if the browser natively support XMLHttpRequest 
+    if(!request && typeof XMLHttpRequest != "undefined"){
+    //The browser does, so lets instantiate the object
+        request = new XMLHttpRequest();
+    }
+
+    return request;
+}
+
+function loadData(url, callback)
+{
+    var aXMLHttpRequest = getXMLHTTPRequest();
+    var allData;
+
+    if (aXMLHttpRequest)
+    {
+        aXMLHttpRequest.open("GET", url, true);
+    
+        aXMLHttpRequest.onreadystatechange = function (aEvt) {
+            if(aXMLHttpRequest.readyState == 4){
+                allData = aXMLHttpRequest.responseText;
+                callback(allData)
+            }
+        };
+    
+        //Lets fire off the request
+        aXMLHttpRequest.send(null);
+    }
+    else
+    {
+        //Oh no, the XMLHttpRequest object couldn't be instantiated.
+        alert("A problem occurred instantiating the XMLHttpRequest object.");
+    }
+}
+
+var load = function()
+{
+	ENV.initialize();
+  loadData("./dream.txt",generateCloud);
+}
+
+
+var allWords = [];
+var wordCount = {}
+
+
+
+function generateCloud(data) 
+{
+   allWords = data.match(/\b\w+\b/g);   //get all words in the document
+   
+   for(var i = 0; i < allWords.length; i = i + 1){
+      allWords[i] = allWords[i].toLowerCase();
+      var num = allWords[i];
+      if(num.length>5){
+        wordCount[num] = wordCount[num] ? wordCount[num]+1 : 1;
+      }
+   }
+
+   var theWords = Object.keys(wordCount); // all words over 5 characters
+
+   var output = "";
+   for(var i = 0; i < theWords.length; i = i + 1){
+     // code here  --- us the wordCount object to generate a word cloud of words that occur more than once.
+     output += "<span>" + theWords[i] + " </span>"
+   }
+
+   
+   document.getElementById('cloud').innerHTML = output;
+}
+</script>
+
+</head>
+
+<body onload='load()'> <!-- load starts execution after body loads -->
+<h1> Word Cloud </h1>
+<div id='cloud'> </div>
+</body>
+
+</html>

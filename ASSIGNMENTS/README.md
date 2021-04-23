@@ -6,5 +6,5 @@
    https://book.programmingthecloud.com/ptc/skills/git.html).
 4. Please share repo with `tejaswigowda` (add me as a collaborator)
   <img src='https://i.stack.imgur.com/50mL0.png'>
-  
+
 5. Please post the link to your home work repository (github url) as a submission on Canvas.
